@@ -1,50 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-export default class Siderbar extends Component {
-    constructor(props){
-        super(props);
-        this.state ={
-            modules:[
-                {
-                    id:1,
-                    title:"Iniciando com React",
-                    lessons: [
-                        {id: 1 , title: "Primeira aula"},
-                        {id: 2 , title: "segunda aula"}
-                    ],
-                },
-                {
-                    id:2,
-                    title: "Aprendendo Redux",
-                    lessons:[
-                        {id: 3, title: "Terçeira aula"},
-                        {id: 4, title: "Quarta aula"}
-                    ]
+import { connect } from 'react-redux'; 
 
-                }
-            ]
-        }
+const Siderbar = ({modules}) => (
+    <aside>
+    {
+        modules.map(module =>(
+            <div  key={module.id}>
+                 <strong>
+                 {module.title}
+                 </strong>
+                 <ul>
+                     {module.lessons.map(lesson => (
+
+                     <li key={lesson.id}>{lesson.title}</li> 
+                     ))}
+                 </ul>
+            </div>
+        ))
     }
-    render() {
-        const {modules} = this.state;
-        return (
-           <aside>
-           {
-               modules.map(module =>(
-                   <div  key={module.id}>
-                        <strong>
-                        {module.title}
-                        </strong>
-                        <ul>
-                            {module.lessons.map(lesson => (
+    </aside>
+);
 
-                            <li key={lesson.id}>{lesson.title}</li> 
-                            ))}
-                        </ul>
-                   </div>
-               ))
-           }
-           </aside>
-        );
-    }
-}
+export default connect( state => ({ modules: state }))(Siderbar);
