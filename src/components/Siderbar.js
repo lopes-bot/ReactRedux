@@ -2,7 +2,15 @@ import React from 'react';
 
 import { connect } from 'react-redux'; 
 
-const Siderbar = ({modules}) => (
+function toggleLesson(module, lesson){
+    return{
+        type: 'TOGGLE_LESSON',
+        module,
+        lesson,
+    };
+}
+
+const Siderbar = ({modules, dispatch}) => (
     <aside>
     {
         modules.map(module =>(
@@ -13,7 +21,11 @@ const Siderbar = ({modules}) => (
                  <ul>
                      {module.lessons.map(lesson => (
 
-                     <li key={lesson.id}>{lesson.title}</li> 
+                     <li key={lesson.id}>
+
+                     {lesson.title}
+                     <button onClick={() => dispatch(toggleLesson(module,lesson)) }>Selecionar</button>
+                     </li> 
                      ))}
                  </ul>
             </div>
@@ -22,4 +34,4 @@ const Siderbar = ({modules}) => (
     </aside>
 );
 
-export default connect( state => ({ modules: state }))(Siderbar);
+export default connect( state => ({ modules: state.modules }))(Siderbar);
